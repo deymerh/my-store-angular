@@ -1,0 +1,8 @@
+<img
+  class="image"
+  [src]="image" 
+  alt="Image with source from father!"
+  *ngIf="image"
+  (load)="imageLoad()"
+  (error)="imageError()"
+>

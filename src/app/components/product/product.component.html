@@ -1,0 +1,7 @@
+<div class="product">
+  <app-img [image]="product.image"></app-img>
+  <h1 class="product__price">{{product.price}}</h1>
+  <p appHighlight class="product__name">{{product.title}}</p>
+  <p appHighlight>{{product.description}}</p>
+  <button (click)="addToCart()">Agregar</button>
+</div>

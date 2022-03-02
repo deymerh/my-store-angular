@@ -1,0 +1,22 @@
+p, h1{
+  margin: 0;
+}
+/* .product{
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  margin: 10px 10px 10px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.product__price{
+  font-size: 1em;
+  margin: 8px 0px;
+}
+.product__name{
+  font-size: 1.2em;
+}
+.product:hover{
+  border: 1px solid rgba(0, 0, 0, 0.5);
+} */
