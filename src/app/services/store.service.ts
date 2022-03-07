@@ -23,4 +23,5 @@ export class StoreService {
   getTotalShoppingCart(){
     return this.myShoppingCart;
   }
+
 }

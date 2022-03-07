@@ -1,22 +1,24 @@
-<p>{{ productList.length }}</p>
-<p>Total:  {{ total | currency:'COP' }}</p>
-<p>
-  Today: {{ today | date:'short' }}
-</p>
-<p>
-  Today: {{ today | timeAgo }}
-</p>
-<p>
-  Otra fecha: {{ date | date:'yyyy...dd...MM' }}
-</p>
-<p>
-  {{ 'hOLA BasCVASas asASA' | uppercase }}
-</p>
+<button (click)="createNewProduct()">Crear nuevo producto</button>
+<button style="border-color: red;" (click)="getProductDetail(1212)">Probar un error</button>
 <div class="product__grid">
   <app-product
     [product]="product" 
     *ngFor="let product of productList"
     (addedProduct)="addToShoppingCart($event)"
+    (showProductDetail)="getProductDetail($event)"
   >
   </app-product>
+</div>
+<button (click)="loadMoreProducts()">Cargar mas elementos</button>
+<div class="product-detail" [ngClass]="{'active': showProductDetail}">
+  <div class="product-detail-items">
+    <button (click)="toggleProductDetail()">Close</button>
+    <h1>{{ productChosen.title }}</h1>
+    <div>
+      <img [src]="productChosen.images[0]" [alt]="productChosen.title">
+    </div>
+    <p>{{ productChosen.description }}</p>
+  </div>
+  <button (click)="updateProduct()">Editar</button>
+  <button (click)="deleteProduct()">Borrar</button>
 </div>
