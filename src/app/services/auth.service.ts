@@ -6,12 +6,12 @@ import {
   HttpParams,
   HttpStatusCode } from '@angular/common/http';
 
-import { BehaviorSubject } from 'rxjs';
+  import { BehaviorSubject } from 'rxjs';
+  import { switchMap, tap } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
 import { Auth } from '../models/auth.model';
 import { User, CreateUserDTO } from '../models/user.model';
-import { switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -21,11 +21,7 @@ export class AuthService {
 
   private apiURL:string = `${environment.API_URL}`;
   
-  private user = new BehaviorSubject<CreateUserDTO>({
-    email: '',
-    name: '',
-    password: ''
-  });
+  private user = new BehaviorSubject<CreateUserDTO | null>(null)
 
   user$ = this.user.asObservable();
 
@@ -44,16 +40,19 @@ export class AuthService {
   getProfile(){
     // const headers = new HttpHeaders();
     // headers.set('Autorization', `Bearer ${token}`);
-    return this.httpClient.get<User>(`${this.apiURL}/api/auth/profile`, {
-      // El token lo agregamos a travez de un interceptor
-    })
+    return this.httpClient.get<User>(`${this.apiURL}/api/auth/profile`)
+      .pipe(
+        tap((user) => this.user.next(user))
+      )
   }
 
   loginAndGetProfile(email: string, password: string) {
     return this.login(email, password)
     .pipe(
-      switchMap(() => this.getProfile()),
-      switchMap(async (res) => this.user.next(res)))
+      switchMap(() => this.getProfile()))
     }
 
+  logout(){
+    this.tokenService.removeToken();
+  }
 }

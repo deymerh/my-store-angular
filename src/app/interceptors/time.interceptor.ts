@@ -26,7 +26,6 @@ export class TimeInterceptor implements HttpInterceptor {
       return next.handle(request)
       .pipe(tap(()=>{
         const time = (performance.now() - start + 'ms');
-        console.log(time);
       }));
     } 
     return next.handle(request);

@@ -12,7 +12,9 @@ export class TokenService {
     window.localStorage.setItem('token', token);
   }
   getToken(){
-    const token = window.localStorage.getItem('token');
-    return token;
+    return window.localStorage.getItem('token');
+  }
+  removeToken(){
+    window.localStorage.removeItem('token');
   }
 }

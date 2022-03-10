@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
-
-// import { Product } from './models/product.model';
 import { FilesService } from './services/files.service';
+import { TokenService } from './services/token.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: '<router-outlet></router-outlet>',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   
   showComponentImage: boolean = true;
 
@@ -23,29 +23,25 @@ export class AppComponent {
     private userService: UsersService,
     private authService: AuthService,
     private filesService: FilesService,
+    private tokenService: TokenService,
+
     ){}
-  
-    onLoaded(image:string){
+  ngOnInit(): void {
+    const token = this.tokenService.getToken();
+    if (token) {
+      this.authService.getProfile()
+        .subscribe();
+    }
+  }
+    
+  onLoaded(image:string){
     // console.log("Event father!: ", image);
   }
   toggleImage(){
     this.showComponentImage = !this.showComponentImage;
   }
 
-  createUser(){
-    this.userService.create({
-      name: 'Deymer',
-      email: 'deymerh@deymerh.com',
-      password: 'deymerh'
-    }).subscribe()
-  }
-
-  login(email:string = 'deymerh@deymerh.com', password:string = 'deymerh'){
-    this.authService.loginAndGetProfile(email, password).subscribe();
-  }
- 
   downloadFile(){
-    console.log('hola')
     this.filesService.getFile(
       'my.pdf',
       'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',

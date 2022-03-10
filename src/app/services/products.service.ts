@@ -21,13 +21,24 @@ export class ProductsService {
   private apiURL:string = `${environment.API_URL}`;
   // private apiURL:string = 'https://young-sands-07814.herokuapp.com/api';
   
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+  ) { }
 
   // getProductsPagination(limit:number, offset:number){
   //   return this.httpClient.get<Product[]>(`${this.apiURL}/products`, {
   //     params: {limit, offset}
   //   })
   // }
+
+  getByCategory(categoryId:string, limit?:number, offset?:number){
+    let params = new HttpParams();
+    if(limit && offset){
+      params = params.set('limit', limit);
+      params = params.set('offset', offset);
+    }
+    return this.httpClient.get<Product[]>(`${this.apiURL}/api/categories/${categoryId}/products`)
+  }
 
   getAllProducts(limit?:number, offset?:number){
     let params = new HttpParams();
@@ -52,7 +63,7 @@ export class ProductsService {
   }
 
 
-  getProduct(id:number){
+  getProduct(id:number | string){
     return this.httpClient.get<Product>(`${this.apiURL}/api/products/${id}`)
       .pipe(
         catchError((error:HttpErrorResponse)=>{

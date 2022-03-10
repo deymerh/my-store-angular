@@ -1,0 +1,13 @@
+div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 120px);
+}
+button{
+  margin-top: 50px;
+  border-radius: 10px;
+  background-color: aqua;
+  border-style: none;
+}

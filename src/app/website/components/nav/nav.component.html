@@ -1,0 +1,61 @@
+<div class="show-mobile">
+  <div>
+    <button (click)="toggleMenu()">
+      <img src="./assets/svg/icon_menu.svg" alt="menu">
+    </button>
+    <a href="">
+      <img src="./assets/svg/logo_yard_sale.svg" alt="logo">
+    </a>
+    <a href="">
+      <img src="./assets/svg/icon_shopping_cart.svg" alt="logo">
+    </a>
+  </div>
+  <div class="side-menu" [ngClass]="{active: activeMenu}">
+    <button (click)="toggleMenu()">Close</button>
+    <ul>
+      <li><a routerLinkActive="active-link" routerLink="home">All</a></li>
+      <li *ngFor="let categorie of categories">
+        <a
+          routerLinkActive="active-link"
+          [routerLink]="['/category', categorie.id]"
+        >
+          {{ categorie.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="hide-mobile">
+  <div>
+    <nav>
+      <a class="logo" routerLink="/home">
+        <img src="./assets/svg/logo_yard_sale.svg" alt="logo">
+      </a>
+      <ul>
+        <li><a routerLinkActive="active-link" routerLink="home">All</a></li>
+        <li *ngFor="let categorie of categories">
+          <a 
+            routerLinkActive="active-link"
+            [routerLink]="['/category', categorie.id]"
+          >
+            {{ categorie.name }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="info">
+      <button *ngIf="!user" style="margin-right: 10px;" (click)="createUser()">Create</button>
+      <button *ngIf="!user; else elseBlock" (click)="login()">Login</button>
+      <ng-template #elseBlock>
+        <a routerLink="/profile" *ngIf="user?.email" class="account">{{ user?.email }}</a>
+        <button *ngIf="user?.email" style="margin-left: 10px;" (click)="logout()">Logout</button>
+      </ng-template>
+      <div class="cart">
+        <a href="">
+          <img src="./assets/svg/icon_shopping_cart.svg" alt="logo">
+        </a>
+        <span class="counter">{{ counter }}</span>
+      </div>
+    </div>
+  </div>
+</div>
